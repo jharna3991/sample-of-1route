@@ -57,17 +57,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    private static LatLng latLng;
+    static LatLng currentlatLng;
 
     final String TAG = this.getClass().getName();
 
-    public  LatLng getLatLng() {
-        return latLng;
-    }
+//    public  LatLng getLatLng() {
+//        return latLng;
+//    }
 
-    public static void setLatLng(LatLng latLng) {
-        MapsActivity.latLng = latLng;
-    }
+//    public static void setLatLng(LatLng latLng) {
+//        MapsActivity.latLng = latLng;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +141,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        currentlatLng = latLng;
+
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         LocationManager locationManager = (LocationManager)
@@ -280,10 +283,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapLongClick(LatLng destlatLng) {
+
+        Log.d(TAG, "" + destlatLng);
+
         if(marker!=null){
             marker.remove();
 
-            Log.d(TAG, "" + destlatLng);
+
         }
 
 
@@ -291,7 +297,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
 
         // Getting URL to the Google Directions API
-        String url = getUrl(latLng, destlatLng);
+        String url = getUrl(currentlatLng, destlatLng);
         Log.d("onMapClick", url.toString());
         FetchUrl FetchUrl = new FetchUrl();
 
