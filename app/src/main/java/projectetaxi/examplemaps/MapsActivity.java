@@ -288,21 +288,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(marker!=null){
             marker.remove();
+            marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
 
+            // Getting URL to the Google Directions API
+            String url = getUrl(currentlatLng, destlatLng);
+            Log.d("onMapClick", url.toString());
+            FetchUrl FetchUrl = new FetchUrl();
+
+            // Start downloading json data from Google Directions API
+            FetchUrl.execute(url);
 
         }
 
 
 
-        marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
 
-        // Getting URL to the Google Directions API
-        String url = getUrl(currentlatLng, destlatLng);
-        Log.d("onMapClick", url.toString());
-        FetchUrl FetchUrl = new FetchUrl();
-
-        // Start downloading json data from Google Directions API
-        FetchUrl.execute(url);
 
 
     }
