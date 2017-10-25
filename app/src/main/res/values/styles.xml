@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--<string name="app_name">AndroidMapRouteDistance</string>-->
+    <!--<string name="title_activity_maps">Map</string>-->
+    <!--<string name="route_distance">Distance</string>-->
+    <!--<string name="route_distance_value">40.2 Km</string>-->
+    <!--<string name="route_duration">Duration</string>-->
+    <!--<string name="route_duration_value">48 mins</string>-->
+    <!--<string name="server_error">Server error. Something when wrong with the server</string>-->
+
+</resources>
