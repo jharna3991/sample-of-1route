@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -56,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker, marker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
+    TextView tvDistanceDuration;
 
     static LatLng currentlatLng;
 
@@ -288,21 +291,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(marker!=null){
             marker.remove();
-
+            MarkerPoints.clear();
         }
         marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
 
-        // Getting URL to the Google Directions API
-        String url = getUrl(currentlatLng, destlatLng);
-        Log.d("onMapClick", url.toString());
-        FetchUrl FetchUrl = new FetchUrl();
+        if (MarkerPoints.size()>=2){
+            LatLng latLng = MarkerPoints.get(0);
+            destlatLng = MarkerPoints.get(1);
 
-        // Start downloading json data from Google Directions API
-        FetchUrl.execute(url);
+            // Getting URL to the Google Directions API
+            String url = getUrl(currentlatLng, destlatLng);
+            Log.d("onMapClick", url.toString());
+            FetchUrl FetchUrl = new FetchUrl();
+
+            // Start downloading json data from Google Directions API
+            FetchUrl.execute(url);
 
 
-
-
+        }
 
 
     }
@@ -443,6 +449,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
+            String distance = "";
+            String duration = "";
+
+
 
             // Traversing through all the routes
             for (int i = 0; i < result.size(); i++) {
@@ -455,6 +465,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Fetching all the points in i-th route
                 for (int j = 0; j < path.size(); j++) {
                     HashMap<String, String> point = path.get(j);
+
+                    if(j==0){    // Get distance from the list
+                        distance = (String)point.get("distance");
+                        continue;
+                    }else if(j==1){ // Get duration from the list
+                        duration = (String)point.get("duration");
+                        continue;
+                    }
+
 
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
@@ -471,6 +490,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("onPostExecute","onPostExecute lineoptions decoded");
 
             }
+
+            tvDistanceDuration.setText("Distance:"+distance + ", Duration:"+duration);
+
 
             // Drawing polyline in the Google Map for the i-th route
             if(lineOptions != null) {
