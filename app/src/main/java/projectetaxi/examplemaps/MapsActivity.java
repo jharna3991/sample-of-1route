@@ -294,10 +294,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MarkerPoints.clear();
         }
         marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
+        MarkerPoints.add(destlatLng);
 
-        if (MarkerPoints.size()>=2){
-            LatLng latLng = MarkerPoints.get(0);
-            destlatLng = MarkerPoints.get(1);
+        if (MarkerPoints.size()==2){
+//            LatLng currentlatLng = MarkerPoints.get(0);
+//            destlatLng = MarkerPoints.get(1);
 
             // Getting URL to the Google Directions API
             String url = getUrl(currentlatLng, destlatLng);
