@@ -296,7 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
         MarkerPoints.add(destlatLng);
 
-        if (MarkerPoints.size()==2){
+//        if (MarkerPoints.size()==2){
 //            LatLng currentlatLng = MarkerPoints.get(0);
 //            destlatLng = MarkerPoints.get(1);
 
@@ -309,7 +309,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             FetchUrl.execute(url);
 
 
-        }
+//        }
 
 
     }
