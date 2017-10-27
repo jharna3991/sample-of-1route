@@ -79,8 +79,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
+        tvDistanceDuration = (TextView) findViewById(R.id.tv_distance_time);
+
+
         // Initializing
-        MarkerPoints = new ArrayList<>();
+        MarkerPoints = new ArrayList<LatLng>();
 
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager()
@@ -291,7 +295,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(marker!=null){
             marker.remove();
-            MarkerPoints.clear();
+            mMap.clear();
         }
         marker= mMap.addMarker(new MarkerOptions().position(destlatLng).title(destlatLng.toString()));
         MarkerPoints.add(destlatLng);
@@ -504,4 +508,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 }
